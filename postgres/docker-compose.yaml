@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: dbEventManegement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456Zxcv
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data  # Monta un volumen local para persistir los datos
+
+volumes:
+  pgdata:
+    driver: local
+

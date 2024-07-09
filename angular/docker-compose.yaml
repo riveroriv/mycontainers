@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  angular-app:
+    container_name: angular-16
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "4200:4200"
