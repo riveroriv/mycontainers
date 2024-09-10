@@ -1,0 +1,34 @@
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+      
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+      - 9093:9093
+    environment:
+      KAFKA_LISTENERS: PLAINTEXT://:9092,SSL://:9093
+      KAFKA_ADVERTISED_LISTENERS:  PLAINTEXT://kafka:9092,SSL://172.29.2.140:9093
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_SSL_KEYSTORE_LOCATION: /etc/kafka/secrets/kafka.server.keystore.jks
+      KAFKA_SSL_KEYSTORE_PASSWORD: changeit
+      KAFKA_SSL_KEY_PASSWORD: changeit
+      KAFKA_SSL_TRUSTSTORE_LOCATION: /etc/kafka/secrets/kafka.server.truststore.jks
+      KAFKA_SSL_TRUSTSTORE_PASSWORD: changeit
+      KAFKA_SSL_CLIENT_AUTH: required
+    volumes:
+      - //var/run/docker.sock:/var/run/docker.sock
+      - ./secrets:/etc/kafka/secrets
+    links:
+      - zookeeper
+
+  kafkaui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    ports:
+      - "8085:8080"
+    environment:
+      DYNAMIC_CONFIG_ENABLED: 'true'
