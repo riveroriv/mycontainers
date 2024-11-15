@@ -1,0 +1,26 @@
+[ req ]
+default_bits        = 2048
+default_keyfile     = ca-key.key
+distinguished_name  = req_distinguished_name
+req_extensions      = req_ext
+x509_extensions     = v3_ca
+
+[ req_distinguished_name ]
+countryName          = BO
+countryName_default  = BO
+stateOrProvinceName  = Test
+stateOrProvinceName_default = Test
+localityName         = Test
+localityName_default = Test
+organizationalUnitName = Test
+organizationalUnitName_default = Test
+commonName           = Test
+commonName_default   = TestCA
+commonName_max       = 64
+
+[ req_ext ]
+subjectAltName = @alt_names
+
+[ alt_names ]
+DNS.1 = kafka-server
+IP.1 = tu.ip.xd
